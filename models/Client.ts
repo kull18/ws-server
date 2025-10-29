@@ -4,15 +4,23 @@ import { Hub } from "./Hub"
 
 
 export class Client {
+    readonly id: string
     readonly chanel: Chanel<string>
     readonly conn: WebSocket
     readonly hub: Hub
     readonly closed: boolean
     
-    constructor(conn: WebSocket, hub: Hub, closed: boolean) {
+    constructor(id: string, conn: WebSocket, hub: Hub, closed: boolean) {
+        this.id = id
         this.chanel = new Chanel<string>()
         this.conn = conn, 
         this.hub = hub,
         this.closed = closed
+    }
+
+    send(message: string) {
+        if(this.conn.readyState === WebSocket.OPEN) {
+            this.conn.send(JSON.stringify(message))
+        }
     }
 }
