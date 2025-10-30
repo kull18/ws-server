@@ -1,6 +1,7 @@
 import { WebSocket } from "ws"
 import { Chanel } from "./Channel"
 import { Hub } from "./Hub"
+import { Message } from "./message"
 
 
 export class Client {
@@ -18,7 +19,7 @@ export class Client {
         this.closed = closed
     }
 
-    send(message: string) {
+    send(message: Message) {
         if(this.conn.readyState === WebSocket.OPEN) {
             this.conn.send(JSON.stringify(message))
         }

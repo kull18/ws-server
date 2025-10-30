@@ -1,5 +1,6 @@
 import { Chanel } from "./Channel";
 import { Client } from "./Client";
+import { Message } from "./message";
 
 export class Hub {
   clients: Map<string, Client>;
@@ -12,9 +13,9 @@ export class Hub {
     this.clients.set(client.id, client);
   }
 
-  sendToAllClients(idClient: string, message: string) {
-    for(const [id, client] of this.clients) {
-      if(id !== idClient) {
+  sendToAllClients(idClient: string, message: Message) {
+    for(const [idSearch, client]of this.clients) {
+      if(idClient === idSearch) {
         client.send(message)
       }
     }
